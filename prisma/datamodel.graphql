@@ -1,0 +1,59 @@
+type Flow {
+  id: ID! @unique
+  description: String! @default(value: "*")
+  currency: CURRENCY! @default(value: "IDR")
+  type: FLOW_TYPE
+  value: Float
+  date: DateTime!
+}
+
+type FixedFlow {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  description: String! @default(value: "*")
+  currency: CURRENCY! @default(value: "IDR")
+  type: FLOW_TYPE
+  typeTime: FIXED_TYPE
+  value: Float
+  dateNumber: Int
+  weekNumber: Int
+  monthNumber: Int
+  startDate: DateTime!
+  endDate: DateTime!
+}
+
+type Report {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  object: [ReportObject!]! @relation(name: "ObjectOnReport")
+}
+
+type ReportObject {
+  id: ID! @unique
+  description: String! @default(value: "*")
+  currency: CURRENCY! @default(value: "IDR")
+  type: FLOW_TYPE
+  value: Float
+  date: DateTime!
+  report: Report @relation(name: "ObjectOnReport")
+  sequence: Int
+}
+
+enum CURRENCY{
+  IDR
+  USD
+}
+
+enum FLOW_TYPE{
+  IN
+  OUT
+}
+
+enum FIXED_TYPE{
+  DAILY
+  WEEKLY
+  MONTHLY
+  ANNUALY
+}
